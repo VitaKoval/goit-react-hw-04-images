@@ -1,49 +1,42 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types'
-
+import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Overlay, ModalWindow } from '../ui/Modal';
 import { createPortal } from 'react-dom';
 
 const modalRoot = document.querySelector('#modal-root');
 
-class Modal extends Component {
-  componentDidMount() {
-    // console.log('Загрузилась модалка');
-    window.addEventListener('keydown', this.hendleKeyDown);
-  }
+function Modal({ onCloseModal, largeImage }) {
+  useEffect(() => {
+    window.addEventListener('keydown', hendleKeyDown);
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.hendleKeyDown);
-  }
+    return () => window.removeEventListener('keydown', hendleKeyDown);
+  });
 
-  hendleKeyDown = evt => {
-    if (evt.code === 'Escape') {
-      // console.log('Нажали на ESC нужно акрыть модалку!');
-      this.props.onCloseModal();
-    }
-  };
-
-  hendleOverlayClick = evt => {
+  const hendleOverlayClick = evt => {
     if (evt.currentTarget === evt.target) {
-      this.props.onCloseModal();
+      onCloseModal();
     }
   };
 
-  render() {
-    return createPortal(
-      <Overlay onClick={this.hendleOverlayClick}>
-        <ModalWindow>
-          <img src={this.props.largeImage} alt="" />
-        </ModalWindow>
-      </Overlay>,
-      modalRoot
-    );
-  }
+  const hendleKeyDown = evt => {
+    if (evt.code === 'Escape') {
+      onCloseModal();
+    }
+  };
+
+  return createPortal(
+    <Overlay onClick={hendleOverlayClick}>
+      <ModalWindow>
+        <img src={largeImage} alt={largeImage} />
+      </ModalWindow>
+    </Overlay>,
+    modalRoot
+  );
 }
 
 Modal.propTypes = {
   onCloseModal: PropTypes.func,
   largeImage: PropTypes.string.isRequired,
-}
+};
 
 export default Modal;

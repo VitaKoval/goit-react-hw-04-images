@@ -1,21 +1,17 @@
-import React, { Component } from 'react';
+import { useState } from "react";
 // import { ToastContainer} from 'react-toastify';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 
+function App() {
+  const [keyword, setKeyword] = useState('');
 
-class App extends Component {
-  state = {
-    keyword: '',
-  };
-
-  handleSearchFormSubmit = keyword => {
+const handleSearchFormSubmit = keyword => {
     // console.log(keyword);
-    this.setState({ keyword });
+    setKeyword(keyword);
   };
 
-  render() {
-    return (
+  return (
       <div
         style={{
           display: 'grid',
@@ -24,14 +20,12 @@ class App extends Component {
           paddingBottom: '24px',
         }}
       >
-        <Searchbar onSubmit={this.handleSearchFormSubmit} />
-        <ImageGallery keyword={this.state.keyword} />
+        <Searchbar onSubmit={handleSearchFormSubmit} />
+        <ImageGallery keyword={keyword} />
         {/* <ToastContainer/> */}
       </div>
     );
-  }
+
 }
-
-
 
 export default App;
