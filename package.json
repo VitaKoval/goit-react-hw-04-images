@@ -2,7 +2,7 @@
   "name": "react-homework-template",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://VitaKoval.github.io/goit-react-hw-04-images/",
+  "homepage": "https://VitaKoval.github.io/images/",
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
